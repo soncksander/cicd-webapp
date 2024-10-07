@@ -1,0 +1,27 @@
+services:
+  webapp:
+    build: .
+    container_name: webapp
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_URL: jdbc:mysql://database:3306?user=sander&password=sander
+      MYSQL_USER: sander
+      MYSQL_PASSWORD: sander
+    volumes:
+      - ./database:/app/database
+
+  database:
+    image: mysql
+    container_name: db
+    depends_on:
+      - webapp
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: sander
+      MYSQL_PASSWORD: sander
+
+
+volumes:
+  database:
+    
