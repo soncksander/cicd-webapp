@@ -1,6 +1,6 @@
 services:
   webapp:
-    image: sandersonck/webapp
+    build: .
     container_name: webapp
     depends_on:
       database:
@@ -9,7 +9,7 @@ services:
       - 3000:3000
     environment:
       MYSQL_URL: mysql://sander:sander@database:3306/animals
-      # mysql://<USER>:<PASSWORD>@<HOST>:<PORT>/<DATABASE> 
+      # mysql://<USER>:<PASSWORD>@<HOST>:<PORT>/<DATABASE>
     volumes:
       - ./database:/app/database
 
@@ -26,20 +26,21 @@ services:
       - 33060:3306
     healthcheck:
       test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
-      start_period: 3s
-      interval: 1s
-      timeout: 1s
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
       retries: 55
     volumes:
       - database2:/app/database2
 
   tests:
-    image: sandersonck/webapp
+    image: webapp-webapp
     container_name: tests
     environment: 
       API_URL: http://webapp:3000
     depends_on:
-      - webapp
+      webapp:
+        condition: service_started
     command: yarn test
 
 volumes:
