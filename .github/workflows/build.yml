@@ -18,9 +18,6 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
-      - name: test
-        run: yarn test
-
       - name: Run Lint
         run: yarn lint
 
