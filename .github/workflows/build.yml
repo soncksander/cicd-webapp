@@ -15,7 +15,8 @@ jobs:
           node-version: 20
       - name: Install Dependencies
         run: yarn install
-      - name: Install Dependencies
+        
+      - name: test
         run: yarn test
 
       - name: Run Lint
