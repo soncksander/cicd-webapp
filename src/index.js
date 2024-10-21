@@ -50,6 +50,7 @@ app.use((err, _, res, next) => {
   next();
 });
 
+
 persistence
   .initialize()
   .then(() => {
